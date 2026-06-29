@@ -9,65 +9,97 @@
 }
 
 body {
-  /* 🟢 Cambiamos el color plano por una imagen moderna y abstracta de fondo */
-  background-image: linear-gradient(rgba(16, 42, 67, 0.85), rgba(29, 53, 87, 0.9)), 
+  background-image: linear-gradient(rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.95)), 
                     url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  
+  min-height: 100vh;
+  color: #f8fafc;
+}
+
+/* ==========================================
+   CONTENEDORES DE AUTENTICACIÓN (Login / Register)
+   ========================================== */
+.auth-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  color: #334e68;
+  min-height: 90vh;
+  padding: 1rem;
 }
 
-/* ==========================================
-   CONTENEDOR PRINCIPAL (CARD)
-   ========================================== */
-div > div {
+.auth-container {
   background: #ffffff;
   padding: 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(180, 195, 210, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   width: 100%;
-  max-width: 400px; /* Tamaño perfecto para escritorio y móvil */
-  transition: all 0.3s ease;
+  max-width: 400px;
+  color: #334e68;
 }
 
-h1, h2 {
+.auth-container h1 {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   text-align: center;
-  color: #102a43; /* Azul marino profundo */
-  font-weight: 600;
+  color: #102a43;
 }
 
-/* ==========================================
-   FORMULARIOS & ENTRADAS (INPUTS)
-   ========================================== */
-form {
+.auth-form {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
 }
 
-form div {
+.auth-form .form-group {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
 }
 
-label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #486581;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+/* ==========================================
+   DASHBOARD DE MASCOTAS (CRUD PANEL)
+   ========================================== */
+.crud-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
 }
 
+.crud-container h1 {
+  font-size: 2.25rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+}
+
+.crud-container h2 {
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem 0;
+  color: #e2e8f0;
+}
+
+/* Formulario de registro (Superior) */
+.creation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: #334155;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.creation-form h2 {
+  color: #0f172a !important;
+  margin: 0 0 0.5rem 0 !important;
+}
+
+/* Inputs generales */
 input, select {
   width: 100%;
   padding: 0.75rem 1rem;
@@ -77,66 +109,146 @@ input, select {
   background-color: #f8fafc;
   color: #102a43;
   outline: none;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease;
 }
 
 input:focus, select:focus {
-  border-color: #243b53; /* Azul acento al enfocar */
+  border-color: #2563eb;
   background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(36, 59, 83, 0.15);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 /* ==========================================
-   BOTONES & ENLACES
+   CUADRÍCULA RESPONSIVA (GRID) DE TARJETAS
    ========================================== */
-button {
+.pet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Tarjeta de Mascota */
+.pet-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  color: #334155;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.pet-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Contención estricta de la imagen */
+.pet-card-img {
   width: 100%;
-  padding: 0.85rem;
-  font-size: 1rem;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.pet-card-img-placeholder {
+  width: 100%;
+  height: 220px;
+  background-color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-style: italic;
+}
+
+/* Contenido de la Tarjeta */
+.pet-card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.pet-card-body h3 {
+  color: #0f172a;
+  font-size: 1.3rem;
+  margin-bottom: 0.25rem;
+}
+
+.pet-card-body p {
+  font-size: 0.95rem;
+  color: #475569;
+}
+
+.pet-card-meta {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+/* Botones y Acciones */
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto; /* Empuja los botones siempre al fondo */
+  padding-top: 1rem;
+}
+
+button, .btn-action {
+  padding: 0.65rem 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #ffffff;
-  background-color: #1d3557; /* Azul elegante corporativo */
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  margin-top: 0.5rem;
 }
 
-button:hover {
-  background-color: #457b9d; /* Azul más vivo al pasar el cursor */
+.btn-submit {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+.btn-submit:hover { background-color: #1d4ed8; }
+
+.btn-edit {
+  flex: 1;
+  background-color: #f1f5f9;
+  color: #1e293b;
+}
+.btn-edit:hover { background-color: #e2e8f0; }
+
+.btn-terminate {
+  flex: 1;
+  background-color: #ef4444;
+  color: #ffffff;
+}
+.btn-terminate:hover { background-color: #dc2626; }
+
+/* Formulario inline de edición */
+.inline-mutation-form {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
-/* Enlaces de redirección inferior */
-div > p {
-  margin-top: 1.5rem;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #627d98;
-}
-
-div > p a {
-  color: #334e68;
-  font-weight: 600;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-div > p a:hover {
-  color: #457b9d;
-  text-decoration: underline;
-}
-
-/* Mensajes de respuesta (feedback) */
-p {
-  text-align: center;
-  margin-top: 1rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-/* Identificamos los mensajes por su contenido semántico */
-form + p {
-  padding: 0.5rem;
-  border-radius: 6px;
+/* ==========================================
+   MEDIA QUERIES (ESCRITORIO)
+   ========================================== */
+@media (min-width: 768px) {
+  .creation-form {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+  
+  .form-field {
+    flex: 1;
+  }
+  
+  .creation-form button {
+    width: auto;
+    height: 42px;
+  }
 }

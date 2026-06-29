@@ -16,7 +16,7 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         setError("");
         setSuccess("");
 
@@ -43,51 +43,53 @@ function Register() {
     };
 
     return (
-        <div className="auth-container">
-            <h1>Register New User</h1>
+        <div className="auth-wrapper"> {/* Envoltura clave */}
+            <div className="auth-container">
+                <h1>Register New User</h1>
 
-            <form onSubmit={handleSubmit} className="auth-form">
-                <div className="form-group">
-                    <label>Username</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
+                <form onSubmit={handleSubmit} className="auth-form">
+                    <div className="form-group">
+                        <label>Username</label>
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required 
-                    />
-                </div>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label>Role</label>
-                    <select value={rol} onChange={(e) => setRol(e.target.value)}>
-                        <option value="USER">USER</option>
-                        <option value="ADMIN">ADMIN</option>
-                    </select>
-                </div>
+                    <div className="form-group">
+                        <label>Role</label>
+                        <select value={rol} onChange={(e) => setRol(e.target.value)}>
+                            <option value="USER">USER</option>
+                            <option value="ADMIN">ADMIN</option>
+                        </select>
+                    </div>
 
-                <button type="submit" className="btn-primary">Register</button>
-            </form>
+                    <button type="submit" className="btn-primary">Register</button>
+                </form>
 
-            {error && (
-                <p style={{ color: "#e63946", backgroundColor: "#ffe3e3", padding: "0.5rem", borderRadius: "4px", marginTop: "1rem" }}>
-                    {error}
-                </p>
-            )}
-            {success && (
-                <p style={{ color: "#2b9348", backgroundColor: "#e8f5e9", padding: "0.5rem", borderRadius: "4px", marginTop: "1rem" }}>
-                    {success}
-                </p>
-            )}
+                {error && (
+                    <p style={{ color: "#e63946", backgroundColor: "#ffe3e3", padding: "0.5rem", borderRadius: "4px", marginTop: "1rem" }}>
+                        {error}
+                    </p>
+                )}
+                {success && (
+                    <p style={{ color: "#2b9348", backgroundColor: "#e8f5e9", padding: "0.5rem", borderRadius: "4px", marginTop: "1rem" }}>
+                        {success}
+                    </p>
+                )}
+            </div>
         </div>
     );
 }

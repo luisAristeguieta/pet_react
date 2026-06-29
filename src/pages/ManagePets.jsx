@@ -189,74 +189,74 @@ function ManagePets() {
     };
 
     return (
-        <div>
+        <div className="crud-container">
             <h1>Pet Management System</h1>
 
-            {error && <p>{error}</p>}
-            {success && <p>{success}</p>}
+            {error && <p className="alert-error">{error}</p>}
+            {success && <p className="alert-success">{success}</p>}
 
             {/* Creation Form Area */}
-            <form onSubmit={handleRegisterSubmit}>
+            <form onSubmit={handleRegisterSubmit} className="creation-form">
                 <h2>Register New Pet Target</h2>
-                <div>
+                <div className="form-field">
                     <label>Name</label>
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
                 </div>
-                <div>
+                <div className="form-field">
                     <label>Breed</label>
                     <input type="text" value={breed} onChange={(e) => setBreed(e.target.value)} required />
                 </div>
-                <div>
+                <div className="form-field">
                     <label>Photo Attachment</label>
                     <input id="creationFileInput" type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])} required />
                 </div>
-                <button type="submit">Save Asset Record</button>
+                <button type="submit" className="btn-submit">Save Asset Record</button>
             </form>
 
             {/* Cards Grid Section */}
             <h2>Registered Pets Matrix</h2>
             {pets.length === 0 ? (
-                <p>No pet assets recorded in the current database context cluster.</p>
+                <p style={{ color: "#64748b", fontStyle: "italic" }}>No pet assets recorded in the current database context cluster.</p>
             ) : (
                 <div className="pet-grid">
                     {pets.map((pet) => (
                         <div key={pet.id} className="pet-card">
                             {editingId === pet.id ? (
-                                <form onSubmit={(e) => handleUpdateSubmit(e, pet.id)}>
+                                <form onSubmit={(e) => handleUpdateSubmit(e, pet.id)} className="inline-mutation-form">
                                     <h4>Inline Update Menu</h4>
-                                    <div>
+                                    <div className="mutation-field">
                                         <label>Name:</label>
-                                        <input type="text" value={editName} onChange={(e) => setEditName(e.target.value)} required style={{ width: "100%" }} />
+                                        <input type="text" value={editName} onChange={(e) => setEditName(e.target.value)} required />
                                     </div>
-                                    <div>
+                                    <div className="mutation-field">
                                         <label>Breed:</label>
-                                        <input type="text" value={editBreed} onChange={(e) => setEditBreed(e.target.value)} required style={{ width: "100%" }} />
+                                        <input type="text" value={editBreed} onChange={(e) => setEditBreed(e.target.value)} required />
                                     </div>
-                                    <div>
+                                    <div className="mutation-field">
                                         <label>Replace Photo (Optional):</label>
-                                        <input type="file" accept="image/*" onChange={(e) => setEditFile(e.target.files[0])} style={{ width: "100%" }} />
+                                        <input type="file" accept="image/*" onChange={(e) => setEditFile(e.target.files[0])} />
                                     </div>
-                                    <div>
-                                        <button type="submit">Save</button>
-                                        <button type="button" onClick={cancelEditState}>Cancel</button>
+                                    <div className="card-actions">
+                                        <button type="submit" className="btn-save">Save</button>
+                                        <button type="button" onClick={cancelEditState} className="btn-cancel">Cancel</button>
                                     </div>
                                 </form>
                             ) : (
                                 <>
                                     {photoUrls[pet.id] ? (
-                                        <img src={photoUrls[pet.id]} alt={pet.name} width="150" />
+                                        <img src={photoUrls[pet.id]} alt={pet.name} className="pet-card-img" />
                                     ) : (
-                                        <div>Streaming Data Image...</div>
+                                        <div className="pet-card-img-placeholder">Streaming Data Image...</div>
                                     )}
 
-                                    <div>
+                                    <div className="pet-card-body">
                                         <h3>{pet.name}</h3>
                                         <p><strong>Breed:</strong> {pet.breed}</p>
-                                        <span>Format: {pet.mimeType}</span>
-
-                                        <div>
-                                            <button onClick={() => initiateEditState(pet)}>Edit Asset</button>
-                                            <button onClick={() => handleDeleteClick(pet.id)}>Terminate</button>
+                                        <span className="pet-card-meta">Format: {pet.mimeType}</span>
+                                        
+                                        <div className="card-actions">
+                                            <button onClick={() => initiateEditState(pet)} className="btn-edit">Edit Asset</button>
+                                            <button onClick={() => handleDeleteClick(pet.id)} className="btn-terminate">Terminate</button>
                                         </div>
                                     </div>
                                 </>

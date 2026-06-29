@@ -46,38 +46,40 @@ function Login() {
     };
 
     return (
-        <div className="auth-container">
-            <h1>Log in</h1>
-            <form onSubmit={handleSubmit} className="auth-form">
-                <div className="form-group">
-                    <label>Username</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
+        <div className="auth-wrapper"> {/* Envoltura clave */}
+            <div className="auth-container">
+                <h1>Log in</h1>
+                <form onSubmit={handleSubmit} className="auth-form">
+                    <div className="form-group">
+                        <label>Username</label>
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                {error && (
-                    <p style={{ color: "#e63946", backgroundColor: "#ffe3e3", padding: "0.5rem", borderRadius: "4px" }}>
-                        {error}
-                    </p>
-                )}
+                    {error && (
+                        <p style={{ color: "#e63946", backgroundColor: "#ffe3e3", padding: "0.5rem", borderRadius: "4px" }}>
+                            {error}
+                        </p>
+                    )}
 
-                <button type="submit" className="btn-primary">Log In</button>
-            </form>
-            <div className="auth-footer">
-                <p>Don't have an account? <Link to="/register">Register here</Link></p>
+                    <button type="submit" className="btn-primary">Log In</button>
+                </form>
+                <div className="auth-footer">
+                    <p>Don't have an account? <Link to="/register">Register here</Link></p>
+                </div>
             </div>
         </div>
     );
