@@ -86,4 +86,12 @@ public class PetController {
 					.body("Mutation process crashed within persistence layer pipelines: " + e.getMessage());
 		}
 	}
+
+	@GetMapping("/{id}/photo")
+	public ResponseEntity<byte[]> getPetPhoto(@PathVariable("id") Integer id) {
+		return petRepository.findById(id)
+				.map(pet -> ResponseEntity.ok().header("Content-Type", pet.getMimeType()).body(pet.getPhoto()))
+				.orElse(ResponseEntity.notFound().build());
+	}
+
 }
