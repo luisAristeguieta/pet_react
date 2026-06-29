@@ -1,16 +1,22 @@
-# React + Vite
+# Pet Management System 🐾
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Aplicación Full-Stack para registrar usuarios y gestionar mascotas con fotos utilizando seguridad JWT.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologías
+- **Backend:** Java Spring Boot, Spring Security, JPA.
+- **Frontend:** React, React Router, CSS Grid.
+- **Base de Datos:** PostgreSQL.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🔒 Flujo de Seguridad
+1. El usuario se registra (`/register`) y su contraseña se encripta con **BCrypt**.
+2. Al iniciar sesión (`/login`), recibe un **Token JWT**.
+3. El frontend guarda el token y lo incluye en los encabezados de cada petición para acceder a las rutas protegidas (`/profile`, `/pet`).
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 📡 Endpoints Principales
+- `POST /auth/register` - Registrar usuario (USER/ADMIN).
+- `POST /auth/login` - Iniciar sesión y obtener JWT.
+- `GET /auth/pets` - Listar mascotas registradas.
+- `GET /auth/pets/{id}/photo` - Descargar la foto de la mascota (`Blob`).
+- `POST /auth/pets/register` - Guardar nueva mascota con foto (`Multipart`).
+- `PUT /auth/pets/{id}` - Editar datos o foto de una mascota.
+- `DELETE /auth/pets/{id}` - Eliminar mascota del sistema.
