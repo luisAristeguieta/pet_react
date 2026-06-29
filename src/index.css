@@ -1,0 +1,142 @@
+/* ==========================================
+   ESTILOS GLOBALES & RESET
+   ========================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  /* 🟢 Cambiamos el color plano por una imagen moderna y abstracta de fondo */
+  background-image: linear-gradient(rgba(16, 42, 67, 0.85), rgba(29, 53, 87, 0.9)), 
+                    url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #334e68;
+}
+
+/* ==========================================
+   CONTENEDOR PRINCIPAL (CARD)
+   ========================================== */
+div > div {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(180, 195, 210, 0.4);
+  width: 100%;
+  max-width: 400px; /* Tamaño perfecto para escritorio y móvil */
+  transition: all 0.3s ease;
+}
+
+h1, h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #102a43; /* Azul marino profundo */
+  font-weight: 600;
+}
+
+/* ==========================================
+   FORMULARIOS & ENTRADAS (INPUTS)
+   ========================================== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #486581;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  color: #102a43;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+input:focus, select:focus {
+  border-color: #243b53; /* Azul acento al enfocar */
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(36, 59, 83, 0.15);
+}
+
+/* ==========================================
+   BOTONES & ENLACES
+   ========================================== */
+button {
+  width: 100%;
+  padding: 0.85rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #1d3557; /* Azul elegante corporativo */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+button:hover {
+  background-color: #457b9d; /* Azul más vivo al pasar el cursor */
+}
+
+/* Enlaces de redirección inferior */
+div > p {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #627d98;
+}
+
+div > p a {
+  color: #334e68;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+div > p a:hover {
+  color: #457b9d;
+  text-decoration: underline;
+}
+
+/* Mensajes de respuesta (feedback) */
+p {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Identificamos los mensajes por su contenido semántico */
+form + p {
+  padding: 0.5rem;
+  border-radius: 6px;
+}
