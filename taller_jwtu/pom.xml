@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.krakedev</groupId>
-	<artifactId>taller_jwt</artifactId>
+	<artifactId>taller_jwtu</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>

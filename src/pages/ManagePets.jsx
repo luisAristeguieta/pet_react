@@ -3,9 +3,46 @@ import { useAuth } from "../context/AuthContext";
 import { API_BASE_URL } from "../config/apiConfig";
 
 
-function ListarPets({ pets, onDelete }) {
+function ManagePets() {
+    const [pets, setPets] = useState([]);
+
     const [photoUrls, setPhotoUrls] = useState({});
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+    const [name, setName] = useState("");
+    const [breed, setBreed] = useState("");
+    const [file, setFile] = useState(null);
+
+    const [editingId, setEditingId] = useState(null);
+    const [editName, setEditName] = useState("");
+    const [editBreed, setEditBreed] = useState("");
+    const [editFile, setEditFile] = useState(null);
+
     const { token } = useAuth();
+
+    const fetchPetsList = async () => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/pets`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to pull pets resource registry from server storage clusters.");
+            }
+
+            const data = await response.json();
+            setPets(data);
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    useEffect(() => {
+        if (token) {
+            fetchPetsList();
+        }
+    }, [token]);
 
     useEffect(() => {
         const createdUrls = [];
@@ -13,29 +50,23 @@ function ListarPets({ pets, onDelete }) {
         const downloadPhotos = async () => {
             for (const pet of pets) {
                 try {
-                    // Fetching manejando imagen: 
                     const res = await fetch(`${API_BASE_URL}/auth/pets/${pet.id}/photo`, {
                         method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
+                        headers: { 'Authorization': `Bearer ${token}` }
                     });
 
                     if (res.ok) {
                         const blob = await res.blob();
                         const localUrl = URL.createObjectURL(blob);
-
                         createdUrls.push(localUrl);
-
-                        // lógica funcional para actualizar el estado inmediatamente:
 
                         setPhotoUrls((prev) => ({
                             ...prev,
                             [pet.id]: localUrl
                         }));
                     }
-                } catch (error) {
-                    console.error("CRITICAL: Failed to stream pet binary photo payload: ", error);
+                } catch (err) {
+                    console.error("Failed to download image stream context: ", err);
                 }
             }
         };
@@ -49,33 +80,193 @@ function ListarPets({ pets, onDelete }) {
                 URL.revokeObjectURL(url);
             }
         };
-
     }, [pets, token]);
+
+    const handleRegisterSubmit = async (e) => {
+        e.preventDefault();
+        
+        setError("");
+        setSuccess("");
+
+        if (!file) {
+            setError("Validation failed: A valid photo file attachment stream is required.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("breed", breed);
+        formData.append("file", file);
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/pets/register`, {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${token}` },
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error("Server rejected multipart submission pipeline processing requests.");
+            }
+
+            setSuccess("Pet asset successfully recorded within active persistence nodes!");
+            setName("");
+            setBreed("");
+            setFile(null);
+            document.getElementById("creationFileInput").value = "";
+
+            fetchPetsList();
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    const initiateEditState = (pet) => {
+        setEditingId(pet.id);
+        setEditName(pet.name);
+        setEditBreed(pet.breed);
+        setEditFile(null);
+    };
+
+    const cancelEditState = () => {
+        setEditingId(null);
+        setEditFile(null);
+    };
+
+    const handleUpdateSubmit = async (e, id) => {
+        e.preventDefault();
+        setError("");
+        setSuccess("");
+
+        const formData = new FormData();
+        formData.append("name", editName);
+        formData.append("breed", editBreed);
+        if (editFile) {
+            formData.append("file", editFile);
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/pets/${id}`, {
+                method: "PUT",
+                headers: { "Authorization": `Bearer ${token}` },
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error("Target asset mutation process rejected by persistence layer pipelines.");
+            }
+
+            setSuccess("Pet attributes updated successfully.");
+            setEditingId(null);
+            setEditFile(null);
+
+            fetchPetsList();
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    const handleDeleteClick = async (id) => {
+        if (!window.confirm("Are you sure you want to completely erase this asset lifecycle context?")) return;
+        setError("");
+        setSuccess("");
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/pets/${id}`, {
+                method: "DELETE",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (!response.ok) {
+                throw new Error("Backend infrastructure failed to drop target reference index row.");
+            }
+
+            setSuccess("Resource context dropped successfully.");
+            fetchPetsList();
+        } catch (err) {
+            setError(err.message);
+        }
+    };
 
     return (
         <div>
+            <h1>Pet Management System</h1>
+
+            {error && <p>{error}</p>}
+            {success && <p>{success}</p>}
+
+            {/* Creation Form Area */}
+            <form onSubmit={handleRegisterSubmit}>
+                <h2>Register New Pet Target</h2>
+                <div>
+                    <label>Name</label>
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+                </div>
+                <div>
+                    <label>Breed</label>
+                    <input type="text" value={breed} onChange={(e) => setBreed(e.target.value)} required />
+                </div>
+                <div>
+                    <label>Photo Attachment</label>
+                    <input id="creationFileInput" type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])} required />
+                </div>
+                <button type="submit">Save Asset Record</button>
+            </form>
+
+            {/* Cards Grid Section */}
             <h2>Registered Pets Matrix</h2>
             {pets.length === 0 ? (
                 <p>No pet assets recorded in the current database context cluster.</p>
             ) : (
-                <ul>
+                <div className="pet-grid">
                     {pets.map((pet) => (
-                        <li key={pet.id}>
-                            <h3>Name: {pet.name}</h3>
-                            <p>Breed: {pet.breed}</p>
-                            <p>MimeType: {pet.mimeType}</p>
+                        <div key={pet.id} className="pet-card">
+                            {editingId === pet.id ? (
+                                <form onSubmit={(e) => handleUpdateSubmit(e, pet.id)}>
+                                    <h4>Inline Update Menu</h4>
+                                    <div>
+                                        <label>Name:</label>
+                                        <input type="text" value={editName} onChange={(e) => setEditName(e.target.value)} required style={{ width: "100%" }} />
+                                    </div>
+                                    <div>
+                                        <label>Breed:</label>
+                                        <input type="text" value={editBreed} onChange={(e) => setEditBreed(e.target.value)} required style={{ width: "100%" }} />
+                                    </div>
+                                    <div>
+                                        <label>Replace Photo (Optional):</label>
+                                        <input type="file" accept="image/*" onChange={(e) => setEditFile(e.target.files[0])} style={{ width: "100%" }} />
+                                    </div>
+                                    <div>
+                                        <button type="submit">Save</button>
+                                        <button type="button" onClick={cancelEditState}>Cancel</button>
+                                    </div>
+                                </form>
+                            ) : (
+                                <>
+                                    {photoUrls[pet.id] ? (
+                                        <img src={photoUrls[pet.id]} alt={pet.name} width="150" />
+                                    ) : (
+                                        <div>Streaming Data Image...</div>
+                                    )}
 
-                            {photoUrls[pet.id] && (
-                                <img src={photoUrls[pet.id]} alt="Pet asset rendering trace" width="150" />
+                                    <div>
+                                        <h3>{pet.name}</h3>
+                                        <p><strong>Breed:</strong> {pet.breed}</p>
+                                        <span>Format: {pet.mimeType}</span>
+
+                                        <div>
+                                            <button onClick={() => initiateEditState(pet)}>Edit Asset</button>
+                                            <button onClick={() => handleDeleteClick(pet.id)}>Terminate</button>
+                                        </div>
+                                    </div>
+                                </>
                             )}
-
-                            <button onClick={() => onDelete(pet.id)}>Terminate Resource</button>
-                        </li>
+                        </div>
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );
 }
 
-export default ListarPets;
+export default ManagePets;
